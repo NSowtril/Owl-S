@@ -1,0 +1,892 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+idt_ptr             0x6               kernel/global.o
+Map                 0x20d             kernel/main.o
+inode_table         0xb00             kernel/global.o
+task_stack          0x38000           kernel/global.o
+k_reenter           0x4               kernel/global.o
+gdt                 0x400             kernel/global.o
+current_console     0x4               kernel/global.o
+pcaller             0x4               kernel/global.o
+tty_table           0xc6c             kernel/global.o
+tss                 0x68              kernel/global.o
+fs_msg              0x30              kernel/global.o
+f_desc_table        0x300             kernel/global.o
+root_inode          0x4               kernel/global.o
+disp_pos            0x4               kernel/global.o
+key_pressed         0x4               kernel/global.o
+gdt_ptr             0x6               kernel/global.o
+idt                 0x800             kernel/global.o
+super_block         0x1e0             kernel/global.o
+PARTITION_ENTRY     0x10              kernel/hd.o
+ticks               0x4               kernel/global.o
+console_table       0x3c              kernel/global.o
+irq_table           0x40              kernel/global.o
+p_proc_ready        0x4               kernel/global.o
+proc_table          0xb44             kernel/global.o
+Snake               0x189c            kernel/main.o
+
+Discarded input sections
+
+ .note.GNU-stack
+                0x0000000000000000        0x0 kernel/start.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 kernel/main.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 kernel/clock.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 kernel/keyboard.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 kernel/tty.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 kernel/console.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 kernel/i8259.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 kernel/global.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 kernel/protect.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 kernel/proc.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 kernel/systask.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 kernel/hd.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 lib/printf.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 lib/vsprintf.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 lib/klib.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 lib/ls.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 lib/sl.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 lib/misc.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 lib/mkdir.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 lib/open.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 lib/read.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 lib/write.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 lib/close.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 lib/unlink.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 lib/getpid.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 lib/syslog.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 fs/main.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 fs/open.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 fs/misc.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 fs/read_write.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 fs/link.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 fs/disklog.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+Address of section .text set to 0x1000
+LOAD kernel/kernel.o
+LOAD lib/syscall.o
+LOAD kernel/start.o
+LOAD kernel/main.o
+LOAD kernel/clock.o
+LOAD kernel/keyboard.o
+LOAD kernel/tty.o
+LOAD kernel/console.o
+LOAD kernel/i8259.o
+LOAD kernel/global.o
+LOAD kernel/protect.o
+LOAD kernel/proc.o
+LOAD kernel/systask.o
+LOAD kernel/hd.o
+LOAD lib/printf.o
+LOAD lib/vsprintf.o
+LOAD lib/kliba.o
+LOAD lib/klib.o
+LOAD lib/string.o
+LOAD lib/ls.o
+LOAD lib/sl.o
+LOAD lib/misc.o
+LOAD lib/mkdir.o
+LOAD lib/open.o
+LOAD lib/read.o
+LOAD lib/write.o
+LOAD lib/close.o
+LOAD lib/unlink.o
+LOAD lib/getpid.o
+LOAD lib/syslog.o
+LOAD fs/main.o
+LOAD fs/open.o
+LOAD fs/misc.o
+LOAD fs/read_write.o
+LOAD fs/link.o
+LOAD fs/disklog.o
+                0x0000000008048000                PROVIDE (__executable_start, 0x8048000)
+                0x0000000008048094                . = (0x8048000 + SIZEOF_HEADERS)
+
+.interp
+ *(.interp)
+
+.note.gnu.build-id
+ *(.note.gnu.build-id)
+
+.hash
+ *(.hash)
+
+.gnu.hash
+ *(.gnu.hash)
+
+.dynsym
+ *(.dynsym)
+
+.dynstr
+ *(.dynstr)
+
+.gnu.version
+ *(.gnu.version)
+
+.gnu.version_d
+ *(.gnu.version_d)
+
+.gnu.version_r
+ *(.gnu.version_r)
+
+.rel.dyn        0x0000000008048094        0x0
+ *(.rel.init)
+ *(.rel.text .rel.text.* .rel.gnu.linkonce.t.*)
+ .rel.text      0x0000000000000000        0x0 kernel/kernel.o
+ *(.rel.fini)
+ *(.rel.rodata .rel.rodata.* .rel.gnu.linkonce.r.*)
+ *(.rel.data.rel.ro .rel.data.rel.ro.* .rel.gnu.linkonce.d.rel.ro.*)
+ *(.rel.data .rel.data.* .rel.gnu.linkonce.d.*)
+ .rel.data      0x0000000000000000        0x0 kernel/kernel.o
+ *(.rel.tdata .rel.tdata.* .rel.gnu.linkonce.td.*)
+ *(.rel.tbss .rel.tbss.* .rel.gnu.linkonce.tb.*)
+ *(.rel.ctors)
+ *(.rel.dtors)
+ *(.rel.got)
+ *(.rel.bss .rel.bss.* .rel.gnu.linkonce.b.*)
+ *(.rel.ifunc)
+
+.rel.plt        0x0000000008048094        0x0
+ *(.rel.plt)
+                0x0000000008048094                PROVIDE (__rel_iplt_start, .)
+ *(.rel.iplt)
+ .rel.iplt      0x0000000000000000        0x0 kernel/kernel.o
+                0x0000000008048094                PROVIDE (__rel_iplt_end, .)
+
+.init
+ *(SORT(.init))
+
+.plt            0x00000000080480a0        0x0
+ *(.plt)
+ *(.iplt)
+ .iplt          0x0000000000000000        0x0 kernel/kernel.o
+
+.text           0x0000000000001000    0x111e1
+ *(.text.unlikely .text.*_unlikely .text.unlikely.*)
+ *(.text.exit .text.exit.*)
+ *(.text.startup .text.startup.*)
+ *(.text.hot .text.hot.*)
+ *(.text .stub .text.* .gnu.linkonce.t.*)
+ .text          0x0000000000001000      0x410 kernel/kernel.o
+                0x0000000000001000                _start
+                0x0000000000001040                hwint00
+                0x0000000000001070                hwint01
+                0x00000000000010a0                hwint02
+                0x00000000000010d0                hwint03
+                0x0000000000001100                hwint04
+                0x0000000000001130                hwint05
+                0x0000000000001160                hwint06
+                0x0000000000001190                hwint07
+                0x00000000000011c0                hwint08
+                0x00000000000011f0                hwint09
+                0x0000000000001220                hwint10
+                0x0000000000001250                hwint11
+                0x0000000000001280                hwint12
+                0x00000000000012b0                hwint13
+                0x00000000000012e0                hwint14
+                0x0000000000001310                hwint15
+                0x0000000000001334                divide_error
+                0x000000000000133a                single_step_exception
+                0x0000000000001340                nmi
+                0x0000000000001346                breakpoint_exception
+                0x000000000000134c                overflow
+                0x0000000000001352                bounds_check
+                0x0000000000001358                inval_opcode
+                0x000000000000135e                copr_not_available
+                0x0000000000001364                double_fault
+                0x0000000000001368                copr_seg_overrun
+                0x000000000000136e                inval_tss
+                0x0000000000001372                segment_not_present
+                0x0000000000001376                stack_exception
+                0x000000000000137a                general_protection
+                0x000000000000137e                page_fault
+                0x0000000000001382                copr_error
+                0x00000000000013cb                sys_call
+                0x00000000000013eb                restart
+ .text          0x0000000000001410       0x28 lib/syscall.o
+                0x0000000000001410                sendrec
+                0x000000000000142a                printx
+ .text          0x0000000000001438       0x8e kernel/start.o
+                0x0000000000001438                cstart
+ .text          0x00000000000014c6     0x55e6 kernel/main.o
+                0x00000000000014c6                rand2048
+                0x00000000000014ed                srand2048
+                0x00000000000014fa                start2048Game
+                0x00000000000015a0                morge2048
+                0x00000000000018a2                printNums2048
+                0x0000000000001940                isAlive2048
+                0x000000000000196d                canEliminate2048
+                0x0000000000001a36                zeroNum2048
+                0x0000000000001a8c                addrandom2048
+                0x0000000000001b2b                move2048
+                0x0000000000001be9                merge2048
+                0x0000000000001c93                initData
+                0x0000000000001d28                kernel_main
+                0x0000000000001fdb                get_ticks
+                0x0000000000002013                addTwoString
+                0x00000000000020a9                shell
+                0x00000000000031c2                TestA
+                0x00000000000031fa                TestB
+                0x0000000000003232                TestC
+                0x000000000000325e                panic
+                0x00000000000032ae                findpass
+                0x0000000000003321                clearArr
+                0x0000000000003349                printAbout
+                0x00000000000033ca                clear
+                0x0000000000003455                doTest
+                0x000000000000349f                verifyFilePass
+                0x000000000000352a                doEncrypt
+                0x000000000000376c                help
+                0x00000000000038a0                ProcessManage
+                0x000000000000398c                p0
+                0x00000000000039bc                animation
+                0x0000000000005a8f                srand_minesweeper
+                0x0000000000005a9c                rand_minesweeper
+                0x0000000000005b3c                show_mat
+                0x0000000000005cda                init_game
+                0x0000000000005e0f                check
+                0x0000000000005eb1                dfs
+                0x0000000000005fe9                game
+                0x0000000000006316                judgeInpt
+                0x0000000000006360                changeToLeft
+                0x0000000000006383                changeToDown
+                0x00000000000063a6                changeToRight
+                0x00000000000063c9                changeToUp
+                0x00000000000063ec                snakeGame
+                0x0000000000006403                initGame
+                0x00000000000064ee                initFood
+                0x0000000000006569                show
+                0x00000000000066b0                move
+                0x00000000000068a4                checkBorder
+                0x00000000000068e3                checkHead
+                0x0000000000006a24                showGameOver
+                0x0000000000006a50                showGameSuccess
+                0x0000000000006a7c                sleep
+ .text          0x0000000000006aac      0x18a kernel/clock.o
+                0x0000000000006aac                clock_handler
+                0x0000000000006b99                milli_delay
+                0x0000000000006bd2                init_clock
+ .text          0x0000000000006c36      0x6da kernel/keyboard.o
+                0x0000000000006c36                keyboard_handler
+                0x0000000000006c9c                init_keyboard
+                0x0000000000006d4b                keyboard_read
+ .text          0x0000000000007310      0x9de kernel/tty.o
+                0x0000000000007310                task_tty
+                0x00000000000074c4                in_process
+                0x00000000000079f5                sys_printx
+                0x0000000000007b97                dump_tty_buf
+ .text          0x0000000000007cee      0x7e1 kernel/console.o
+                0x0000000000007cee                init_screen
+                0x0000000000007e5f                out_char
+                0x000000000000811c                clear_screen
+                0x0000000000008155                is_current_console
+                0x0000000000008178                set_cursor
+                0x00000000000081e1                set_video_start_addr
+                0x000000000000824a                select_console
+                0x0000000000008285                scroll_screen
+                0x0000000000008469                flush
+ .text          0x00000000000084cf      0x13c kernel/i8259.o
+                0x00000000000084cf                init_8259A
+                0x00000000000085c0                spurious_irq
+                0x00000000000085eb                put_irq_handler
+ .text          0x000000000000860b        0x0 kernel/global.o
+ .text          0x000000000000860b      0x7e9 kernel/protect.o
+                0x000000000000860b                init_prot
+                0x0000000000008c0c                seg2phys
+                0x0000000000008cc7                exception_handler
+ .text          0x0000000000008df4     0x1a97 kernel/proc.o
+                0x0000000000008df4                schedule
+                0x0000000000008e85                sys_sendrec
+                0x0000000000008fe4                send_recv
+                0x00000000000090c4                ldt_seg_linear
+                0x000000000000910e                va2la
+                0x000000000000917d                reset_msg
+                0x000000000000a1e9                inform_int
+                0x000000000000a3a6                dump_proc
+                0x000000000000a744                dump_msg
+ .text          0x000000000000a88b       0x95 kernel/systask.o
+                0x000000000000a88b                task_sys
+ .text          0x000000000000a920      0xda3 kernel/hd.o
+                0x000000000000a920                task_hd
+                0x000000000000b69e                hd_handler
+ .text          0x000000000000b6c3       0xc0 lib/printf.o
+                0x000000000000b6c3                printf
+                0x000000000000b742                printl
+ .text          0x000000000000b783      0x318 lib/vsprintf.o
+                0x000000000000b7e6                vsprintf
+                0x000000000000ba71                sprintf
+ *fill*         0x000000000000ba9b        0x5 
+ .text          0x000000000000baa0      0x19a lib/kliba.o
+                0x000000000000baa0                disp_str
+                0x000000000000bade                disp_color_str
+                0x000000000000bb1d                out_byte
+                0x000000000000bb29                in_byte
+                0x000000000000bb33                port_read
+                0x000000000000bb46                port_write
+                0x000000000000bb59                disable_irq
+                0x000000000000bb8e                enable_irq
+                0x000000000000bbad                disable_int
+                0x000000000000bbaf                enable_int
+                0x000000000000bbb1                glitter
+ .text          0x000000000000bc3a      0x1d2 lib/klib.o
+                0x000000000000bc3a                itoa
+                0x000000000000bce5                atoi
+                0x000000000000bda1                disp_int
+                0x000000000000bdc6                delay
+ *fill*         0x000000000000be0c        0x4 
+ .text          0x000000000000be10       0x78 lib/string.o
+                0x000000000000be10                memcpy
+                0x000000000000be39                memset
+                0x000000000000be5a                strcpy
+                0x000000000000be72                strlen
+ .text          0x000000000000be88       0x48 lib/ls.o
+                0x000000000000be88                ls
+ .text          0x000000000000bed0     0x183f lib/sl.o
+                0x000000000000bed0                sl
+ .text          0x000000000000d70f      0x22d lib/misc.o
+                0x000000000000d70f                memcmp
+                0x000000000000d785                strcmp
+                0x000000000000d7f7                strcat
+                0x000000000000d856                strstr
+                0x000000000000d8db                spin
+                0x000000000000d8f6                assertion_failure
+ .text          0x000000000000d93c       0x74 lib/mkdir.o
+                0x000000000000d93c                mkdir
+ .text          0x000000000000d9b0       0x73 lib/open.o
+                0x000000000000d9b0                open
+ .text          0x000000000000da23       0x3f lib/read.o
+                0x000000000000da23                read
+ .text          0x000000000000da62       0x3f lib/write.o
+                0x000000000000da62                write
+ .text          0x000000000000daa1       0x33 lib/close.o
+                0x000000000000daa1                close
+ .text          0x000000000000dad4       0x41 lib/unlink.o
+                0x000000000000dad4                unlink
+ .text          0x000000000000db15       0x59 lib/getpid.o
+                0x000000000000db15                getpid
+ .text          0x000000000000db6e       0xdb lib/syslog.o
+                0x000000000000db6e                syslog
+ .text          0x000000000000dc49      0xee6 fs/main.o
+                0x000000000000dc49                task_fs
+                0x000000000000e5df                rw_sector
+                0x000000000000e819                get_super_block
+                0x000000000000e85f                get_inode
+                0x000000000000e9cd                put_inode
+                0x000000000000ea12                sync_inode
+ .text          0x000000000000eb2f      0xee1 fs/open.o
+                0x000000000000eb2f                do_open
+                0x000000000000f07a                do_close
+                0x000000000000f0d2                do_ls
+                0x000000000000f2ea                do_mkdir
+                0x000000000000f3db                do_lseek
+ .text          0x000000000000fa10      0x4fd fs/misc.o
+                0x000000000000fa10                find_entry
+                0x000000000000fb8d                search_file
+                0x000000000000fd0f                strip_path
+ .text          0x000000000000ff0d      0x522 fs/read_write.o
+                0x000000000000ff0d                do_rdwt
+ .text          0x000000000001042f      0x8ff fs/link.o
+                0x000000000001042f                do_unlink
+ .text          0x0000000000010d2e     0x14b3 fs/disklog.o
+                0x0000000000010d2e                do_disklog
+                0x0000000000010dd9                disklog
+                0x0000000000011383                dump_fd_graph
+ *(.gnu.warning)
+
+.fini
+ *(SORT(.fini))
+                0x00000000000121e1                PROVIDE (__etext, .)
+                0x00000000000121e1                PROVIDE (_etext, .)
+                0x00000000000121e1                PROVIDE (etext, .)
+
+.rodata         0x0000000000012200     0x897f
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata        0x0000000000012200       0x47 kernel/start.o
+ *fill*         0x0000000000012247        0x9 
+ .rodata        0x0000000000012250     0x100c kernel/main.o
+                0x0000000000013094                mapH
+                0x0000000000013098                mapW
+ .rodata        0x000000000001325c       0x64 kernel/keyboard.o
+ .rodata        0x00000000000132c0      0x13c kernel/tty.o
+ .rodata        0x00000000000133fc       0x5b kernel/console.o
+ .rodata        0x0000000000013457       0x11 kernel/i8259.o
+ .rodata        0x0000000000013468        0x4 kernel/global.o
+                0x0000000000013468                FSBUF_SIZE
+ *fill*         0x000000000001346c       0x14 
+ .rodata        0x0000000000013480      0x540 kernel/protect.o
+ .rodata        0x00000000000139c0      0x62e kernel/proc.o
+ .rodata        0x0000000000013fee       0x11 kernel/systask.o
+ *fill*         0x0000000000013fff        0x1 
+ .rodata        0x0000000000014000      0x140 kernel/hd.o
+ .rodata        0x0000000000014140       0x14 lib/printf.o
+ .rodata        0x0000000000014154     0x5c40 lib/sl.o
+ .rodata        0x0000000000019d94       0x61 lib/misc.o
+ .rodata        0x0000000000019df5       0x24 lib/mkdir.o
+ .rodata        0x0000000000019e19       0x23 lib/open.o
+ .rodata        0x0000000000019e3c       0x25 lib/getpid.o
+ .rodata        0x0000000000019e61       0x32 lib/syslog.o
+ *fill*         0x0000000000019e93        0x1 
+ .rodata        0x0000000000019e94      0x26e fs/main.o
+ *fill*         0x000000000001a102        0x2 
+ .rodata        0x000000000001a104      0x150 fs/open.o
+ .rodata        0x000000000001a254      0x164 fs/read_write.o
+ .rodata        0x000000000001a3b8      0x19d fs/link.o
+ *fill*         0x000000000001a555        0x3 
+ .rodata        0x000000000001a558      0x627 fs/disklog.o
+
+.rodata1
+ *(.rodata1)
+
+.eh_frame_hdr
+ *(.eh_frame_hdr)
+
+.eh_frame       0x000000000001ab80     0x1708
+ *(.eh_frame)
+ .eh_frame      0x000000000001ab80       0x38 kernel/start.o
+ .eh_frame      0x000000000001abb8      0x6bc kernel/main.o
+                                        0x6d4 (size before relaxing)
+ .eh_frame      0x000000000001b274       0x60 kernel/clock.o
+                                         0x78 (size before relaxing)
+ .eh_frame      0x000000000001b2d4       0xe0 kernel/keyboard.o
+                                         0xf8 (size before relaxing)
+ .eh_frame      0x000000000001b3b4      0x13c kernel/tty.o
+                                        0x154 (size before relaxing)
+ .eh_frame      0x000000000001b4f0      0x148 kernel/console.o
+                                        0x160 (size before relaxing)
+ .eh_frame      0x000000000001b638       0x60 kernel/i8259.o
+                                         0x78 (size before relaxing)
+ .eh_frame      0x000000000001b698       0xb0 kernel/protect.o
+                                         0xc8 (size before relaxing)
+ .eh_frame      0x000000000001b748      0x1e0 kernel/proc.o
+                                        0x1f8 (size before relaxing)
+ .eh_frame      0x000000000001b928       0x1c kernel/systask.o
+                                         0x34 (size before relaxing)
+ .eh_frame      0x000000000001b944      0x208 kernel/hd.o
+                                        0x220 (size before relaxing)
+ .eh_frame      0x000000000001bb4c       0x40 lib/printf.o
+                                         0x58 (size before relaxing)
+ .eh_frame      0x000000000001bb8c       0x68 lib/vsprintf.o
+                                         0x80 (size before relaxing)
+ .eh_frame      0x000000000001bbf4       0x80 lib/klib.o
+                                         0x98 (size before relaxing)
+ .eh_frame      0x000000000001bc74       0x20 lib/ls.o
+                                         0x38 (size before relaxing)
+ .eh_frame      0x000000000001bc94       0x20 lib/sl.o
+                                         0x38 (size before relaxing)
+ .eh_frame      0x000000000001bcb4       0xbc lib/misc.o
+                                         0xd4 (size before relaxing)
+ .eh_frame      0x000000000001bd70       0x20 lib/mkdir.o
+                                         0x38 (size before relaxing)
+ .eh_frame      0x000000000001bd90       0x20 lib/open.o
+                                         0x38 (size before relaxing)
+ .eh_frame      0x000000000001bdb0       0x20 lib/read.o
+                                         0x38 (size before relaxing)
+ .eh_frame      0x000000000001bdd0       0x20 lib/write.o
+                                         0x38 (size before relaxing)
+ .eh_frame      0x000000000001bdf0       0x20 lib/close.o
+                                         0x38 (size before relaxing)
+ .eh_frame      0x000000000001be10       0x20 lib/unlink.o
+                                         0x38 (size before relaxing)
+ .eh_frame      0x000000000001be30       0x20 lib/getpid.o
+                                         0x38 (size before relaxing)
+ .eh_frame      0x000000000001be50       0x20 lib/syslog.o
+                                         0x38 (size before relaxing)
+ .eh_frame      0x000000000001be70      0x134 fs/main.o
+                                        0x14c (size before relaxing)
+ .eh_frame      0x000000000001bfa4      0x194 fs/open.o
+                                        0x1ac (size before relaxing)
+ .eh_frame      0x000000000001c138       0x78 fs/misc.o
+                                         0x90 (size before relaxing)
+ .eh_frame      0x000000000001c1b0       0x2c fs/read_write.o
+                                         0x44 (size before relaxing)
+ .eh_frame      0x000000000001c1dc       0x2c fs/link.o
+                                         0x44 (size before relaxing)
+ .eh_frame      0x000000000001c208       0x80 fs/disklog.o
+                                         0x98 (size before relaxing)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+
+.exception_ranges
+ *(.exception_ranges .exception_ranges*)
+                0x000000000001c288                . = (ALIGN (0x1000) - ((0x1000 - .) & 0xfff))
+                0x000000000001d288                . = DATA_SEGMENT_ALIGN (0x1000, 0x1000)
+
+.eh_frame
+ *(.eh_frame)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+
+.exception_ranges
+ *(.exception_ranges .exception_ranges*)
+
+.tdata
+ *(.tdata .tdata.* .gnu.linkonce.td.*)
+
+.tbss
+ *(.tbss .tbss.* .gnu.linkonce.tb.*)
+ *(.tcommon)
+
+.preinit_array  0x000000000001d288        0x0
+                0x000000000001d288                PROVIDE (__preinit_array_start, .)
+ *(.preinit_array)
+                0x000000000001d288                PROVIDE (__preinit_array_end, .)
+
+.init_array     0x000000000001d288        0x0
+                0x000000000001d288                PROVIDE (__init_array_start, .)
+ *(SORT(.init_array.*) SORT(.ctors.*))
+ *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
+                0x000000000001d288                PROVIDE (__init_array_end, .)
+
+.fini_array     0x000000000001d288        0x0
+                0x000000000001d288                PROVIDE (__fini_array_start, .)
+ *(SORT(.fini_array.*) SORT(.dtors.*))
+ *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
+                0x000000000001d288                PROVIDE (__fini_array_end, .)
+
+.ctors
+ *crtbegin.o(.ctors)
+ *crtbegin?.o(.ctors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+ *(SORT(.ctors.*))
+ *(.ctors)
+
+.dtors
+ *crtbegin.o(.dtors)
+ *crtbegin?.o(.dtors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+ *(SORT(.dtors.*))
+ *(.dtors)
+
+.jcr
+ *(.jcr)
+
+.data.rel.ro
+ *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*)
+ *(.data.rel.ro .data.rel.ro.* .gnu.linkonce.d.rel.ro.*)
+
+.dynamic
+ *(.dynamic)
+
+.got
+ *(.got)
+ *(.igot)
+                0x000000000001d288                . = DATA_SEGMENT_RELRO_END (., (SIZEOF (.got.plt) >= 0xc)?0xc:0x0)
+
+.got.plt        0x000000000001d288        0x0
+ *(.got.plt)
+ *(.igot.plt)
+ .igot.plt      0x0000000000000000        0x0 kernel/kernel.o
+
+.data           0x000000000001d2a0      0x880
+ *(.data .data.* .gnu.linkonce.d.*)
+ .data          0x000000000001d2a0        0x2 kernel/kernel.o
+ .data          0x000000000001d2a2        0x0 kernel/start.o
+ *fill*         0x000000000001d2a2       0x1e 
+ .data          0x000000000001d2c0       0xc4 kernel/main.o
+                0x000000000001d2c4                _seed2
+                0x000000000001d2c8                sHead
+                0x000000000001d2c9                sBody
+                0x000000000001d2ca                sFood
+                0x000000000001d2cb                sNode
+                0x000000000001d2e0                food
+                0x000000000001d358                eat
+                0x000000000001d35c                win
+                0x000000000001d360                sLength
+                0x000000000001d364                dx
+                0x000000000001d374                dy
+ .data          0x000000000001d384        0x0 kernel/clock.o
+ *fill*         0x000000000001d384       0x1c 
+ .data          0x000000000001d3a0      0x600 kernel/keyboard.o
+                0x000000000001d3a0                keymap
+ .data          0x000000000001d9a0       0x22 kernel/tty.o
+ .data          0x000000000001d9c2        0x0 kernel/console.o
+ .data          0x000000000001d9c2        0x0 kernel/i8259.o
+ *fill*         0x000000000001d9c2       0x1e 
+ .data          0x000000000001d9e0      0x140 kernel/global.o
+                0x000000000001d9e0                task_table
+                0x000000000001da80                user_proc_table
+                0x000000000001daf8                sys_call_table
+                0x000000000001db04                dd_map
+                0x000000000001db1c                fsbuf
+ .data          0x000000000001db20        0x0 kernel/protect.o
+ .data          0x000000000001db20        0x0 kernel/proc.o
+ .data          0x000000000001db20        0x0 kernel/systask.o
+ .data          0x000000000001db20        0x0 kernel/hd.o
+ .data          0x000000000001db20        0x0 lib/printf.o
+ .data          0x000000000001db20        0x0 lib/vsprintf.o
+ .data          0x000000000001db20        0x0 lib/klib.o
+ .data          0x000000000001db20        0x0 lib/ls.o
+ .data          0x000000000001db20        0x0 lib/sl.o
+ .data          0x000000000001db20        0x0 lib/misc.o
+ .data          0x000000000001db20        0x0 lib/mkdir.o
+ .data          0x000000000001db20        0x0 lib/open.o
+ .data          0x000000000001db20        0x0 lib/read.o
+ .data          0x000000000001db20        0x0 lib/write.o
+ .data          0x000000000001db20        0x0 lib/close.o
+ .data          0x000000000001db20        0x0 lib/unlink.o
+ .data          0x000000000001db20        0x0 lib/getpid.o
+ .data          0x000000000001db20        0x0 lib/syslog.o
+ .data          0x000000000001db20        0x0 fs/main.o
+ .data          0x000000000001db20        0x0 fs/open.o
+ .data          0x000000000001db20        0x0 fs/misc.o
+ .data          0x000000000001db20        0x0 fs/read_write.o
+ .data          0x000000000001db20        0x0 fs/link.o
+ .data          0x000000000001db20        0x0 fs/disklog.o
+
+.data1
+ *(.data1)
+                0x000000000001db20                _edata = .
+                0x000000000001db20                PROVIDE (edata, .)
+                0x000000000001db20                . = .
+                0x000000000001db20                __bss_start = .
+
+.bss            0x000000000001db20    0x3e1d4
+ *(.dynbss)
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss           0x000000000001db20      0x800 kernel/kernel.o
+ .bss           0x000000000001e320        0x0 kernel/start.o
+ .bss           0x000000000001e320       0x68 kernel/main.o
+                0x000000000001e320                numbers2048
+                0x000000000001e360                tempUnit2048
+                0x000000000001e370                score2048
+                0x000000000001e374                validity2048
+                0x000000000001e378                option2048
+                0x000000000001e37c                listenerStart
+                0x000000000001e380                foodNum
+                0x000000000001e384                overOrNot
+ .bss           0x000000000001e388        0x0 kernel/clock.o
+ *fill*         0x000000000001e388       0x18 
+ .bss           0x000000000001e3a0       0x58 kernel/keyboard.o
+ .bss           0x000000000001e3f8        0x0 kernel/tty.o
+ .bss           0x000000000001e3f8        0x0 kernel/console.o
+ .bss           0x000000000001e3f8        0x0 kernel/i8259.o
+ .bss           0x000000000001e3f8        0x0 kernel/global.o
+ .bss           0x000000000001e3f8        0x0 kernel/protect.o
+ .bss           0x000000000001e3f8        0x0 kernel/proc.o
+ .bss           0x000000000001e3f8        0x0 kernel/systask.o
+ *fill*         0x000000000001e3f8        0x8 
+ .bss           0x000000000001e400      0x64c kernel/hd.o
+ .bss           0x000000000001ea4c        0x0 lib/printf.o
+ .bss           0x000000000001ea4c        0x0 lib/vsprintf.o
+ .bss           0x000000000001ea4c        0x0 lib/klib.o
+ .bss           0x000000000001ea4c        0x0 lib/ls.o
+ .bss           0x000000000001ea4c        0x0 lib/sl.o
+ .bss           0x000000000001ea4c        0x0 lib/misc.o
+ .bss           0x000000000001ea4c        0x0 lib/mkdir.o
+ .bss           0x000000000001ea4c        0x0 lib/open.o
+ .bss           0x000000000001ea4c        0x0 lib/read.o
+ .bss           0x000000000001ea4c        0x0 lib/write.o
+ .bss           0x000000000001ea4c        0x0 lib/close.o
+ .bss           0x000000000001ea4c        0x0 lib/unlink.o
+ .bss           0x000000000001ea4c        0x0 lib/getpid.o
+ .bss           0x000000000001ea4c        0x0 lib/syslog.o
+ .bss           0x000000000001ea4c        0x0 fs/main.o
+ .bss           0x000000000001ea4c        0x0 fs/open.o
+ .bss           0x000000000001ea4c        0x0 fs/misc.o
+ .bss           0x000000000001ea4c        0x0 fs/read_write.o
+ .bss           0x000000000001ea4c        0x0 fs/link.o
+ *fill*         0x000000000001ea4c       0x14 
+ .bss           0x000000000001ea60      0x208 fs/disklog.o
+ *(COMMON)
+ *fill*         0x000000000001ec68       0x18 
+ COMMON         0x000000000001ec80     0x1abc kernel/main.o
+                0x000000000001ec80                Map
+                0x000000000001eea0                Snake
+ *fill*         0x000000000002073c        0x4 
+ COMMON         0x0000000000020740    0x3b5a4 kernel/global.o
+                0x0000000000020740                idt_ptr
+                0x0000000000020760                inode_table
+                0x0000000000021260                task_stack
+                0x0000000000059260                k_reenter
+                0x0000000000059280                gdt
+                0x0000000000059680                current_console
+                0x0000000000059684                pcaller
+                0x00000000000596a0                tty_table
+                0x000000000005a320                tss
+                0x000000000005a3a0                fs_msg
+                0x000000000005a3e0                f_desc_table
+                0x000000000005a6e0                root_inode
+                0x000000000005a6e4                disp_pos
+                0x000000000005a6e8                key_pressed
+                0x000000000005a6ec                gdt_ptr
+                0x000000000005a700                idt
+                0x000000000005af00                super_block
+                0x000000000005b0e0                ticks
+                0x000000000005b100                console_table
+                0x000000000005b140                irq_table
+                0x000000000005b180                p_proc_ready
+                0x000000000005b1a0                proc_table
+ COMMON         0x000000000005bce4       0x10 kernel/hd.o
+                0x000000000005bce4                PARTITION_ENTRY
+                0x000000000005bcf4                . = ALIGN ((. != 0x0)?0x4:0x1)
+                0x000000000005bcf4                . = ALIGN (0x4)
+                0x000000000005bcf4                . = SEGMENT_START ("ldata-segment", .)
+                0x000000000005bcf4                . = ALIGN (0x4)
+                0x000000000005bcf4                _end = .
+                0x000000000005bcf4                PROVIDE (end, .)
+                0x000000000005bcf4                . = DATA_SEGMENT_END (.)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x0000000000000000       0x2b
+ *(.comment)
+ .comment       0x0000000000000000       0x2b kernel/start.o
+                                         0x2c (size before relaxing)
+ .comment       0x0000000000000000       0x2c kernel/main.o
+ .comment       0x0000000000000000       0x2c kernel/clock.o
+ .comment       0x0000000000000000       0x2c kernel/keyboard.o
+ .comment       0x0000000000000000       0x2c kernel/tty.o
+ .comment       0x0000000000000000       0x2c kernel/console.o
+ .comment       0x0000000000000000       0x2c kernel/i8259.o
+ .comment       0x0000000000000000       0x2c kernel/global.o
+ .comment       0x0000000000000000       0x2c kernel/protect.o
+ .comment       0x0000000000000000       0x2c kernel/proc.o
+ .comment       0x0000000000000000       0x2c kernel/systask.o
+ .comment       0x0000000000000000       0x2c kernel/hd.o
+ .comment       0x0000000000000000       0x2c lib/printf.o
+ .comment       0x0000000000000000       0x2c lib/vsprintf.o
+ .comment       0x0000000000000000       0x2c lib/klib.o
+ .comment       0x0000000000000000       0x2c lib/ls.o
+ .comment       0x0000000000000000       0x2c lib/sl.o
+ .comment       0x0000000000000000       0x2c lib/misc.o
+ .comment       0x0000000000000000       0x2c lib/mkdir.o
+ .comment       0x0000000000000000       0x2c lib/open.o
+ .comment       0x0000000000000000       0x2c lib/read.o
+ .comment       0x0000000000000000       0x2c lib/write.o
+ .comment       0x0000000000000000       0x2c lib/close.o
+ .comment       0x0000000000000000       0x2c lib/unlink.o
+ .comment       0x0000000000000000       0x2c lib/getpid.o
+ .comment       0x0000000000000000       0x2c lib/syslog.o
+ .comment       0x0000000000000000       0x2c fs/main.o
+ .comment       0x0000000000000000       0x2c fs/open.o
+ .comment       0x0000000000000000       0x2c fs/misc.o
+ .comment       0x0000000000000000       0x2c fs/read_write.o
+ .comment       0x0000000000000000       0x2c fs/link.o
+ .comment       0x0000000000000000       0x2c fs/disklog.o
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges
+ *(.debug_aranges)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info
+ *(.debug_info .gnu.linkonce.wi.*)
+
+.debug_abbrev
+ *(.debug_abbrev)
+
+.debug_line
+ *(.debug_line .debug_line.* .debug_line_end)
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str
+ *(.debug_str)
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.debug_pubtypes
+ *(.debug_pubtypes)
+
+.debug_ranges
+ *(.debug_ranges)
+
+.debug_macro
+ *(.debug_macro)
+
+.gnu.attributes
+ *(.gnu.attributes)
+
+/DISCARD/
+ *(.note.GNU-stack)
+ *(.gnu_debuglink)
+ *(.gnu.lto_*)
+OUTPUT(kernel.bin elf32-i386)
