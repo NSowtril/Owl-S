@@ -20,8 +20,8 @@
 /*======================================================================*
                             kernel_main
  *======================================================================*/
-PUBLIC int kernel_main() {
-    disp_str("-----\"kernel_main\" begins-----\n");
+PUBLIC int kernel_main() 
+{
     struct task* p_task;
     struct proc* p_proc= proc_table;
     char* p_task_stack = task_stack + STACK_SIZE_TOTAL;
@@ -108,8 +108,6 @@ PUBLIC int kernel_main() {
     init_keyboard();
 
     restart();
-
-    while(1){}
 }
 
 
@@ -151,7 +149,7 @@ void shell(char *tty_name) {
     int fd_stdout = open(tty_name, O_RDWR);
     assert(fd_stdout == 1);
     // The boot animation
-    animation();
+    // animation();
     char current_dirr[512] = "/";
     while (1) {
         // clear the array ！
@@ -162,7 +160,7 @@ void shell(char *tty_name) {
         clearArr(buf, 1024);
         clearArr(temp, 512);
 
-        printf("root@superos%s:~$ ", current_dirr);
+       // printf("root@superos%s:~$ ", current_dirr);
         int r = read(fd_stdin, rdbuf, 512);
         if (strcmp(rdbuf, "") == 0) {
             continue;
@@ -565,7 +563,9 @@ void shell(char *tty_name) {
 
 //A process
 void TestA(){
+    animation();
     shell("/dev_tty0");
+    
     assert(0);
 }
 
@@ -575,7 +575,7 @@ void TestA(){
 */
 //B process
 void TestB(){
-	shell("/dev_tty1");
+	//shell("/dev_tty1");
 	assert(0); /* never arrive here */
 }
 /*======================================================================*
@@ -639,11 +639,10 @@ void printAbout() {
     clear(); 
     if (current_console == 0) {
         printf("=============================================================================\n");
-        printf("                                  Super OS 1.0                               \n");
+        printf("                                  Owl'S                                      \n");
         printf("                     Authors:                                                \n");
-        printf("                              Jinafeng HOU    1552719                        \n");
-        printf("                              Xuantang CUN    1552730                        \n");
-        printf("                              Hejie CUI       1552746                        \n");
+        printf("                              Chudi LAN     1552687                          \n");
+        printf("                              Yulei CHEN    1650257                          \n");
         printf("=============================================================================\n");
     }
     else {
@@ -746,31 +745,30 @@ void doEncrypt(char *path, int fd_stdin) {
 }
 
 void help() {
-    printf("=============================================================================\n");
-    printf("                                  Super OS 1.0                               \n");
-    printf("                     Authors:                                                \n");
-    printf("                              Jinafeng HOU    1552719                        \n");
-    printf("                              Xuantang CUN    1552730                        \n");
-    printf("                              Hejie CUI       1552746                        \n");
-    printf("=============================================================================\n");
-    printf("Usage: [command] [flags] [options]                                           \n");
-    printf("    clear                         : clear the screen                         \n");
-    printf("    ls                            : list files in current directory          \n");
-    printf("    touch       [filename]        : create a new file                        \n");
-    printf("    cat         [filename]        : display content of the file              \n");
-    printf("    vi          [filename]        : modify the content of the file           \n");
-    printf("    rm          [filename]        : delete a file                            \n");
-    printf("    cp          [source] [dest]   : copy a file                              \n");
-    printf("    mv          [source] [dest]   : move a file                              \n");
-    printf("    encrypt     [filename]        : encrypt a file                           \n");
-    printf("    cd          [pathname]        : change the directory                     \n");
-    printf("    mkdir       [dirname]         : create a new directory                   \n");
-    printf("    minesweeper                   : start the minesweeper game               \n");
-    printf("    snake                         : start the snake game                     \n");
-    printf("    2048                          : start the 2048 game                      \n");
-    printf("    process                       : display all process-info and manage      \n");
-    printf("    about                         : display the about of system              \n");
-    printf("=============================================================================\n");
+    printf("===============================================================================\n");
+    printf("                                  Owl'S                                        \n");
+    printf("                     Authors:                                                  \n");
+    printf("                              Chudi LAN     1552687                            \n");
+    printf("                              Yulei CHEN    1650257                            \n");
+    printf("===============================================================================\n");
+    printf("Usage: [command] [flags] [options]                                             \n");
+    printf("    clear                         : clear the screen                           \n");
+    printf("    ls                            : list files in current directory            \n");
+    printf("    touch       [filename]        : create a new file                          \n");
+    printf("    cat         [filename]        : display content of the file                \n");
+    printf("    vi          [filename]        : modify the content of the file             \n");
+    printf("    rm          [filename]        : delete a file                              \n");
+    printf("    cp          [source] [dest]   : copy a file                                \n");
+    printf("    mv          [source] [dest]   : move a file                                \n");
+    printf("    encrypt     [filename]        : encrypt a file                             \n");
+    printf("    cd          [pathname]        : change the directory                       \n");
+    printf("    mkdir       [dirname]         : create a new directory                     \n");
+    // printf("    minesweeper                   : start the minesweeper game                 \n");
+    // printf("    snake                         : start the snake game                       \n");
+    // printf("    2048                          : start the 2048 game                        \n");
+    printf("    process                       : display all process-info and manage        \n");
+    printf("    about                         : display the about of system                \n");
+    printf("===============================================================================\n");
 }
 
 void ProcessManage() {
@@ -805,34 +803,57 @@ void animation(){
 
     int c0=0x70;int c2=0x72;int c3 = 0x73;int c6=0x76;int c7 = 0x77;int c8 = 0x78;int cb=0x7B; int ce=0x7E; int cf=0x7F;
     clear();
-    //p0(55,c7);p0(14,c8);p0(11,c7);
+milli_delay(1000); 
+    p0(55,c7);p0(14,c8);p0(11,c7);
 milli_delay(1000);
     p0(53,c7);p0(2,c8);p0(14,c3);p0(2,c8);p0(9,c7);
 milli_delay(1000);
     p0(48,c7);p0(2,c8);p0(3,c8);p0(16,c3);p0(2,c8);p0(1,c8);p0(8,c7);
+milli_delay(1000);
     p0(38,c7);p0(1,c8);p0(2,c3);p0(1,c8);p0(5,c7);p0(3,c8);p0(20,c3);p0(1,c8);p0(9,c7);
+milli_delay(1000);
     p0(11,c7);p0(12,c8);p0(14,c7);p0(1,c8);p0(3,c3);p0(1,c8);p0(3,c7);p0(2,c8);p0(23,c3);p0(2,c8);p0(8,c7);  
+milli_delay(1000);
     p0(9,c7);p0(2,c8);p0(11,c3);p0(2,c8);p0(13,c7);p0(1,c8);p0(2,c3);p0(1,c8);p0(3,c7);p0(2,c8);p0(23,c3);p0(2,c8);p0(9,c7);
+milli_delay(1000);
     p0(8,c7);p0(1,c8);p0(16,c3);p0(2,c8);p0(4,c7);p0(1,c8);p0(1,c3);p0(1,c8);p0(3,c7);p0(1,c8);p0(1,c3);p0(1,c8);p0(2,c7);p0(1,c8);p0(19,c3);p0(8,c8);p0(10,c7);
+milli_delay(1000);
     p0(8,c7);p0(1,c8);p0(19,c3);p0(1,c8);p0(2,c7);p0(1,c8);p0(2,c3);p0(1,c8);p0(2,c7);p0(1,c8);p0(3,c7);p0(1,c8);p0(9,c3);p0(2,c8);p0(5,c7);p0(5,c8);p0(17,c7);
+milli_delay(1000);
     p0(9,c7);p0(1,c8);p0(20,c3);p0(1,c8);p0(2,c7);p0(2,c8);p0(5,c7);p0(1,c8); p0(5,c3);p0(2,c8);p0(7,c7);p0(2,c8);p0(7,c3);p0(1,c8);p0(15,c7);
+milli_delay(1000);
     p0(17,c7);p0(9,c8);p0(5,c3);p0(1,c8);p0(7,c7);p0(1,c8);p0(3,c3);p0(2,c8); p0(13,c7);p0(2,c8);p0(4,c3);p0(1,c8);p0(15,c7);
+milli_delay(1000);
     p0(14,c7);p0(1,c8);p0(5,c3);p0(2,c8);p0(6,c7);p0(1,c8);p0(3,c3);p0(1,c8); p0(5,c7);p0(1,c8);p0(2,c3);p0(1,c8);p0(6,c7);p0(7,c8);p0(7,c7);p0(1,c8);p0(17,c7);
+milli_delay(1000);
     p0(13,c7);p0(1,c8);p0(4,c3);p0(1,c8);p0(11,c7);p0(1,c8);p0(2,c3);p0(1,c8); p0(4,c7);p0(1,c8);p0(1,c3);p0(1,c8);p0(5,c7);p0(1,c8);p0(9,cb);p0(2,c8);p0(5,c7);p0(1,c8);p0(3,c3);p0(3,c8);p0(10,c7);
+milli_delay(1000);
     p0(14,c7);p0(3,c8);p0(5,c7);p0(6,c8);p0(4,c7);p0(2,c8);p0(3,c7);p0(1,c8); p0(1,c3);p0(1,c8);p0(4,c7);p0(1,c8);p0(13,cb);p0(1,c8);p0(5,c7);p0(1,c8);p0(5,c3);p0(1,c8);p0(9,c7);
+milli_delay(1000);
     p0(13,c7);p0(3,c8);p0(4,c7);p0(1,c8);p0(8,cb);p0(1,c8);p0(3,c7);p0(1,c8);p0(3,c7);p0(1,c8); p0(1,c3);p0(1,c8);p0(3,c7);p0(1,c8);p0(3,cb);p0(2,c8);p0(3,cb);p0(2,c8);p0(5,cb);p0(1,c8);p0(5,c7);p0(1,c8);p0(5,c3);p0(1,c8);p0(8,c7);
+milli_delay(1000);
     p0(11,c7);p0(2,c8);p0(1,c3);p0(1,c8);p0(3,c7);p0(1,c8);p0(4,cb);p0(5,c8);p0(3,cb);p0(1,c8);p0(5,c7);p0(2,c8); p0(3,c7);p0(1,c8);p0(2,cb);p0(2,c8);p0(4,c0);p0(1,c8);p0(3,cf);p0(1,c8);p0(4,cb);p0(1,c8);p0(4,c7);p0(1,c8);p0(5,c3);p0(1,c8);p0(8,c7);
+milli_delay(1000);
     p0(10,c7);p0(1,c8);p0(3,c3);p0(1,c8);p0(3,c7);p0(3,cb);p0(2,cf);p0(3,c0);p0(3,cf);p0(3,cb);p0(1,c8);p0(9,c7);p0(3,cb); p0(1,cf);p0(1,c8);p0(5,c0);p0(3,c8);p0(1,c0);p0(1,c8);p0(3,cb);p0(1,c8);p0(5,c7);p0(2,c8);p0(3,c3);p0(1,c8);p0(8,c7);
+milli_delay(1000);
     p0(9,c7);p0(1,c8);p0(4,c3);p0(1,c8);p0(2,c7);p0(1,c8);p0(3,cb);p0(1,cf);p0(1,c8);p0(6,c0);p0(1,cf);p0(2,cb);p0(1,c8);p0(9,c7);p0(1,c8);p0(2,cb); p0(2,cf);p0(7,c0);p0(2,cf);p0(1,c8);p0(3,cb);p0(1,c8);p0(4,c7);p0(1,c8);p0(1,c2);p0(5,c8);p0(8,c7);
+milli_delay(1000);
     p0(9,c7);p0(1,c8);p0(4,c3);p0(1,c8);p0(2,c7);p0(1,c8);p0(3,cb);p0(1,c8);p0(1,cf);p0(1,c8);p0(4,c0);p0(1,cf);p0(2,cb);p0(1,c8);p0(10,c7);p0(1,c8);p0(3,cb); p0(2,cf);p0(1,c8);p0(4,c0);p0(2,cf);p0(1,c8);p0(3,cb);p0(1,c8);p0(4,c7);p0(1,c8);p0(3,c2);p0(1,c8);p0(11,c7);
+milli_delay(1000);
     p0(10,c7);p0(1,c8);p0(2,c3);p0(1,c8);p0(1,c2);p0(3,c7);p0(2,c8);p0(3,cb);p0(1,c8);p0(3,cf);p0(1,c8);p0(2,cb);p0(1,c8);p0(2,c7);p0(1,c8);p0(4,c6); p0(1,c8);p0(4,c7);p0(1,c8);p0(4,cb);p0(5,c0);p0(1,c8);p0(4,cb);p0(1,c8);p0(4,c7);p0(1,c8);p0(4,c2);p0(1,c8);p0(11,c7);
+milli_delay(1000);
     p0(13,c7);p0(1,c8);p0(2,c2);p0(1,c8);p0(3,c7);p0(1,c8);p0(7,cb);p0(1,c8);p0(3,c7);p0(1,c8);p0(6,c6);p0(1,c8);p0(4,c7);p0(2,c8);p0(10,cb); p0(2,c8);p0(4,c7);p0(1,c8);p0(5,c2);p0(1,c8);p0(11,c7);
+milli_delay(1000);
     p0(13,c7);p0(1,c8);p0(4,c2);p0(1,c8);p0(13,c7);p0(1,c8);p0(6,c6);p0(1,c8);p0(7,c7);p0(8,c8);p0(7,c7);p0(1,c8);p0(5,c2);p0(1,c8);p0(11,c7);
+milli_delay(1000);
     p0(13,c7);p0(2,c8);p0(4,c2);p0(1,c8);p0(6,c7);p0(1,c8);p0(2,ce);p0(1,c8);p0(2,c7);p0(1,c8);p0(5,c6);p0(1,c8);p0(4,c7);p0(1,c8);p0(1,ce);p0(1,c8);p0(12,c7);p0(1,c8);p0(1,c2);p0(1,c8);p0(1,c7);p0(1,c8);p0(4,c2);p0(1,c8);p0(12,c7);
+milli_delay(1000);
     p0(15,c7);p0(1,c8);p0(4,c2);p0(1,c8);p0(1,c7);p0(1,c8);p0(6,ce);p0(1,c8);p0(3,c7);p0(1,c8);p0(3,c6);p0(1,c8);p0(4,c7);p0(1,c8);p0(7,ce);p0(2,c8);p0(7,c2);p0(1,c8);p0(2,c7);p0(1,c8);p0(3,c2);p0(1,c8);p0(13,c7);
+milli_delay(1000);
     p0(16,c7);p0(5,c8);p0(1,c7);p0(2,c8);p0(5,ce);p0(1,c8);p0(4,c7);p0(1,c8);p0(1,c6);p0(1,c8);p0(4,c7);p0(1,c8);p0(6,ce);p0(3,c8);p0(6,c2);p0(4,c8);p0(18,c7);
-    p0(23,c7);p0(7,c8);p0(5,c7);p0(1,c8);p0(8,c7);p0(5,c8);p0(2,c7);p0(8,c8);p0(21,c7);
-
+milli_delay(1000);
+    p0(24,c7);p0(7,c8);p0(5,c7);p0(1,c8);p0(8,c7);p0(5,c8);p0(2,c7);p0(8,c8);p0(21,c7);
+milli_delay(10000);
 }
 
 

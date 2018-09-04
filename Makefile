@@ -17,7 +17,7 @@ CC		= gcc -m32 -std=c99
 LD		= ld -m elf_i386
 ASMBFLAGS	= -I boot/include/
 ASMKFLAGS	= -I include/ -I include/sys/ -f elf
-CFLAGS		= -I include/ -I include/sys/ -c -fno-builtin -Wall -m32 -fno-stack-protector
+CFLAGS		= -I include/ -I include/sys/ -c -fno-builtin -w -m32 -fno-stack-protector
 #CFLAGS		= -I include/ -c -fno-builtin -fno-stack-protector -fpack-struct -Wall
 LDFLAGS		= -Ttext $(ENTRYPOINT) -Map krnl.map -melf_i386
 DASMFLAGS	= -D
