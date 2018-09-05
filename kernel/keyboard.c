@@ -106,6 +106,7 @@ PUBLIC void init_keyboard()
  * @todo Re-write this ugly function.
  *
  * @param tty  Which TTY is reading the keyboard input.
+ * 
  *****************************************************************************/
 PUBLIC void keyboard_read(TTY* tty)
 {
