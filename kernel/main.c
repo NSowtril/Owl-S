@@ -161,7 +161,7 @@ void shell(char *tty_name) {
         clearArr(temp, 512);
         
         //help();
-        // printf("root@superos%s:~$ ", current_dirr);
+        printf("root@owls%s:~$ ", current_dirr);
         int r = read(fd_stdin, rdbuf, 512);
         if (strcmp(rdbuf, "") == 0) {
             continue;
@@ -188,8 +188,8 @@ void shell(char *tty_name) {
         // clear
         rdbuf[r] = 0;
 
-        // Command "process"
-        if (strcmp(cmd, "process") == 0) {
+        // Command "procmng"
+        if (strcmp(cmd, "procmng") == 0) {
             ProcessManage();
         }
 
@@ -235,7 +235,7 @@ void shell(char *tty_name) {
         else if (strcmp(rdbuf, "kill 4") == 0) {
         //            proc_table[4].p_flags = 1;
         //            ProcessManage();
-            printf("cant kill this process!");
+            printf("cannott kill this process!");
         }
 
         // Command "kill 5"
@@ -541,6 +541,16 @@ void shell(char *tty_name) {
             }
         }
 
+        // Command "pwd"
+        else if(strcmp(cmd, "pwd") == 0) {
+            printf("%s\n",current_dirr);
+        }
+
+        // Command "uname"
+        else if(strcmp(cmd,"uname") == 0) {
+            printf("Owl'S\n");
+        }
+
         // Command "snake"
         else if (strcmp(cmd, "snake") == 0) {
             snakeGame();
@@ -639,12 +649,12 @@ void clearArr(char *arr, int length) {
 void printAbout() {
     clear(); 
     if (current_console == 0) {
-        printf("==============================================================================");
-        printf("                                  Owl'S                                       ");
-        printf("                     Authors:                                                 ");
-        printf("                              Chudi LAN     1552687                           ");
-        printf("                              Yulei CHEN    1650257                           ");
-        printf("==============================================================================");
+        printf("================================================================================");
+        printf("                                  Owl'S                                         ");
+        printf("                     Authors:                                                   ");
+        printf("                              Chudi LAN     1552687                             ");
+        printf("                              Yulei CHEN    1650257                             ");
+        printf("================================================================================");
     }
     else {
     	printf("[TTY #%d]\n", current_console);
@@ -748,11 +758,9 @@ void doEncrypt(char *path, int fd_stdin) {
 void help() {
     printf("================================================================================");
     printf("                                  Owl'S                                         ");
-    printf("                     Authors:                                                   ");
-    printf("                              Chudi LAN     1552687                             ");
-    printf("                              Yulei CHEN    1650257                             ");
+    printf("                                                                                ");
+    printf("         A microkernel OS developed by Chudi LAN, Yulei CHEN in 2018            ");
     printf("================================================================================");
-    printf("Usage: [command] [flags] [options]                                              ");
     printf("    clear                         : clear the screen                            ");
     printf("    ls                            : list files in current directory             ");
     printf("    touch       [filename]        : create a new file                           ");
@@ -767,18 +775,18 @@ void help() {
     // printf("    minesweeper                   : start the minesweeper game                  ");
     // printf("    snake                         : start the snake game                        ");
     // printf("    2048                          : start the 2048 game                         ");
-    printf("    process                       : display all process-info and manage         ");
-    printf("    about                         : display the about of system                 ");
+    printf("    procmng                          : process management                          ");
+    printf("    uname                         : display the system's name                   ");
     printf("================================================================================");
 }
 
 void ProcessManage() {
     int i;
     printf("=============================================================================\n");
-    printf("         myID      |    name       |      priority    |     running        \n");
+    printf("         pID      |    name       |      priority    |     running        \n");
     printf("-----------------------------------------------------------------------------\n");
     for (i = 0 ; i < NR_TASKS + NR_PROCS ; ++i) {
-        printf("          %d             %s               %d                 %d\n",
+        printf("          %2d          %10s              %2d              %d\n",
                proc_table[i].pid, proc_table[i].name, proc_table[i].priority, proc_table[i].run_state);
     }
     printf("=============================================================================\n");
