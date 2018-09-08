@@ -14,9 +14,9 @@
 #include "console.h"
 #include "global.h"
 #include "proto.h"
-
+#include "animation.h"
 #include "2048Game.h" // For 2048 game
-
+#include "calculator.h"
 /*======================================================================*
                             kernel_main
  *======================================================================*/
@@ -148,8 +148,6 @@ void shell(char *tty_name) {
     assert(fd_stdin  == 0);
     int fd_stdout = open(tty_name, O_RDWR);
     assert(fd_stdout == 1);
-    // The boot animation
-    // animation();
     char current_dirr[512] = "/";
     if(current_console==0)
         help();
@@ -297,11 +295,12 @@ void shell(char *tty_name) {
 
             fd = open(arg1, O_CREAT | O_RDWR);
             if (fd == -1) {
-                printf("Failed to create file! Please check the filename!\n");
+                printf("touch: failed to create file, please check the filename!\n");
                 continue ;
             }
             write(fd, buf, 1);
-            printf("File created: %s (fd %d)\n", arg1, fd);
+            ls(current_dirr);
+            //printf("touch: file created: %s (fd %d)\n", arg1, fd);
             close(fd);
         }
 
@@ -317,10 +316,7 @@ void shell(char *tty_name) {
                 printf("Failed to open file! Please check the filename!\n");
                 continue ;
             }
-            if (!verifyFilePass(arg1, fd_stdin)) {
-                printf("Authorization failed\n");
-                continue;
-            }
+            
             read(fd, buf, 1024);
             close(fd);
             printf("%s\n", buf);
@@ -342,126 +338,12 @@ void shell(char *tty_name) {
                 printf("Please check the filename!\n");
                 continue ;
             }
-            if (!verifyFilePass(arg1, fd_stdin)) {
-                printf("Authorization failed\n");
-                continue;
-            }
+            
             int tail = read(fd_stdin, rdbuf, 512);
             rdbuf[tail] = 0;
 
             write(fd, rdbuf, tail + 1);
             close(fd);
-        }
-
-        // Command "rm"
-        else if (strcmp(cmd, "rm") == 0) {
-
-            if (arg1[0] != '/') {
-                addTwoString(temp, current_dirr, arg1);
-                memcpy(arg1, temp, 512);
-            }
-
-            int result;
-            result = unlink(arg1);
-            if (result == 0) {
-                printf("File deleted!\n");
-                continue;
-            }
-            else {
-                printf("Failed to delete file! Please check the filename!\n");
-                continue;
-            }
-        }
-
-        // Command "cp"
-        else if (strcmp(cmd, "cp") == 0) {
-            //get the content of file
-            if (arg1[0] != '/') {
-                addTwoString(temp, current_dirr, arg1);
-                memcpy(arg1, temp, 512);
-            }
-            fd = open(arg1, O_RDWR);
-            if (fd == -1) {
-                printf("File not exists! Please check the filename!\n");
-                continue ;
-            }
-            int tail = read(fd, buf, 1024);
-            close(fd);
-
-            if (arg2[0] != '/') {
-                addTwoString(temp, current_dirr, arg2);
-                memcpy(arg2, temp, 512);
-            }
-            /*create the file*/
-            fd = open(arg2, O_CREAT | O_RDWR);
-            if (fd == -1) {
-                //file exist
-            }
-            else {
-                //file not exist or create file
-                char temp2[1024];
-                temp2[0] = 0;
-                write(fd, temp2, 1);
-                close(fd);
-            }
-            //set file to value
-            fd = open(arg2, O_RDWR);
-            write(fd, buf, tail + 1);
-            close(fd);
-        }
-
-        // Command "mv"
-        else if (strcmp(cmd, "mv") == 0) {
-             if (arg1[0] != '/') {
-                addTwoString(temp, current_dirr, arg1);
-                memcpy(arg1, temp, 512);
-            }
-            //get the content of file first
-            fd = open(arg1, O_RDWR);
-            if (fd == -1) {
-                printf("File not exists! Please check the filename!\n");
-                continue ;
-            }
-           
-            int tail = read(fd, buf, 1024);
-            close(fd);
-
-            if (arg2[0] != '/') {
-                addTwoString(temp, current_dirr, arg2);
-                memcpy(arg2, temp, 512);
-            }
-            /*create the file*/
-            fd = open(arg2, O_CREAT | O_RDWR);
-            if (fd == -1) {
-                //file exist
-            }
-            else{
-                //file not exist or create file
-                char temp2[1024];
-                temp2[0] = 0;
-                write(fd, temp2, 1);
-                close(fd);
-            }
-            // set file to value
-            fd = open(arg2, O_RDWR);
-            write(fd, buf, tail+1);
-            close(fd);
-            // delete the file
-            unlink(arg1);
-        }
-
-        // Command "encrypt"
-        else if (strcmp(cmd, "encrypt") == 0) {
-            fd = open(arg1, O_RDWR);
-            if (fd == -1) {
-                printf("File not exists! Please check the filename!\n");
-                continue ;
-            }
-            if (!verifyFilePass(arg1, fd_stdin)) {
-                printf("Authorization failed\n");
-                continue;
-            }
-            doEncrypt(arg1, fd_stdin);
         }
 
         // Command "test"
@@ -535,7 +417,7 @@ void shell(char *tty_name) {
             fd = open(arg1, O_RDWR);
 
             if (fd == -1) {
-                printf("The path not exists! Please check the pathname!\n");
+                printf("cd: path: %s not exists, please check the pathname!\n",arg1);
             }
             else {
                 memcpy(current_dirr, arg1, 512);
@@ -548,10 +430,19 @@ void shell(char *tty_name) {
             printf("%s\n",current_dirr);
         }
 
-        // Command "uname"
-        else if(strcmp(cmd,"uname") == 0) {
-            printf("Owl'S\n");
+        // Command "echo"
+        else if(strcmp(cmd, "echo") == 0) {
+            char* str = rdbuf;
+            while(*str == 0) str++;
+            while(*str != ' ') str++;
+            while(*str == ' ') str++;
+            printf("%s\n",str);
         }
+
+        // Command "calculator"
+        //else if(strcmp(cmd, "calculator") == 0) {
+        //   Calculator();
+        //}
 
         // Command "snake"
         else if (strcmp(cmd, "snake") == 0) {
@@ -577,6 +468,7 @@ void shell(char *tty_name) {
 //A process
 void TestA(){
     animation();
+    clear_screen(console_table[0].orig,console_table[0].con_size);
     shell("/dev_tty0");
     
     assert(0);
@@ -617,30 +509,6 @@ PUBLIC void panic(const char *fmt, ...) {
 /*****************************************************************************
  *                                Custom Command
  *****************************************************************************/
-char* findpass(char *src) {
-    char pass[128];
-    int flag = 0;
-    char *p1, *p2;
-
-    p1 = src;
-    p2 = pass;
-
-    while (p1 && (*p1 != ' ')) {
-        if (*p1 == ':') {
-            flag = 1;
-        }
-
-        if (flag && (*p1 != ':')) {
-            *p2 = *p1;
-            p2++;
-        }
-        p1++;
-    }
-    *p2 = '\0';
-
-    return pass;
-}
-
 void clearArr(char *arr, int length) {
     int i;
     for (i = 0; i < length; i++) {
@@ -648,8 +516,7 @@ void clearArr(char *arr, int length) {
     }
 }
 
-void printAbout() {
-    clear(); 
+void printAbout() { 
     if (current_console == 0) {
         printf("================================================================================");
         printf("                                  Owl'S                                         ");
@@ -677,86 +544,6 @@ void doTest(char *path) {
     printl("\n");
 }
 
-int verifyFilePass(char *path, int fd_stdin) {
-    char pass[128];
-
-    struct dir_entry *pde = find_entry(path);
-
-    /*printl(pde->pass);*/
-
-    if (strcmp(pde->pass, "") == 0) {
-        return 1;
-    }
-
-    printl("Please input the file password: ");
-    read(fd_stdin, pass, 128);
-
-    if (strcmp(pde->pass, pass) == 0) {
-        return 1;
-    }
-
-    return 0;
-}
-
-void doEncrypt(char *path, int fd_stdin) {
-    //search the file
-    /*struct dir_entry *pde = find_entry(path);*/
-
-    char pass[128] = { 0 };
-
-    printl("Please input the new file password: ");
-    read(fd_stdin, pass, 128);
-
-    if (strcmp(pass, "") == 0) {
-        /*printl("A blank password!\n");*/
-        strcpy(pass, "");
-    }
-    //encrypt the file
-    int i, j;
-
-    char filename[MAX_PATH];
-    memset(filename, 0, MAX_FILENAME_LEN);
-    struct inode * dir_inode;
-
-    if (strip_path(filename, path, &dir_inode) != 0) {
-        return 0;
-    }
-
-    /* path: "/" */
-    if (filename[0] == 0) {
-        return dir_inode->i_num;
-    }
-    /**
-     * Search the dir for the file.
-     */
-    int dir_blk0_nr = dir_inode->i_start_sect;
-    int nr_dir_blks = (dir_inode->i_size + SECTOR_SIZE - 1) / SECTOR_SIZE;
-    int nr_dir_entries = dir_inode->i_size / DIR_ENTRY_SIZE;
-    int m = 0;
-    struct dir_entry * pde;
-    for (i = 0; i < nr_dir_blks; i++) {
-        RD_SECT(dir_inode->i_dev, dir_blk0_nr + i);
-        pde = (struct dir_entry *) fsbuf;
-        for (j = 0; j < SECTOR_SIZE / DIR_ENTRY_SIZE; j++,pde++) {
-            if (memcmp(filename, pde->name, MAX_FILENAME_LEN) == 0) {
-                // delete the file
-                strcpy(pde->pass, pass);
-                WR_SECT(dir_inode->i_dev, dir_blk0_nr + i);
-                return;
-                /*return pde->inode_nr;*/
-            }
-            if (++m > nr_dir_entries) {
-                break;
-            }
-        }
-
-         /* all entries have been iterated */
-        if (m > nr_dir_entries) {
-            break;
-        }
-    }
-}
-
 void help() {
     printf("================================================================================");
     printf("                                  Owl'S                                         ");
@@ -764,22 +551,18 @@ void help() {
     printf("         A microkernel OS developed by Chudi LAN, Yulei CHEN in 2018            ");
     printf("================================================================================");
     printf("    clear                         : clear the screen                            ");
+    printf("    pwd                           : print working directory                     ");
     printf("    ls                            : list files in current directory             ");
     printf("    touch       [filename]        : create a new file                           ");
     printf("    cat         [filename]        : display content of the file                 ");
     printf("    vi          [filename]        : modify the content of the file              ");
-    printf("    rm          [filename]        : delete a file                               ");
-    printf("    cp          [source] [dest]   : copy a file                                 ");
-    printf("    mv          [source] [dest]   : move a file                                 ");
-    // printf("    encrypt     [filename]        : encrypt a file                              ");
     printf("    cd          [pathname]        : change the directory                        ");
     printf("    mkdir       [dirname]         : create a new directory                      ");
+    printf("    echo        [string]          : display a line of text                      ");
     // printf("    minesweeper                   : start the minesweeper game                  ");
     // printf("    snake                         : start the snake game                        ");
     // printf("    2048                          : start the 2048 game                         ");
     printf("    procmng                       : process management                          ");
-    printf("    uname                         : display the system's name                   ");
-    printf("    pwd                           : print working directory                     ");
     printf("================================================================================");
 }
 
@@ -801,73 +584,6 @@ void ProcessManage() {
 }
 
 
-/*======================================================================*
-                            The boot animation
- *======================================================================*/
-void p0(int n, int color){
-    for(int i = 0; i < n; i++){
-
-        disp_color_str("0",color);
-    }
-}
-
-void animation(){
-
-    int c0=0x70;int c2=0x72;int c3 = 0x73;int c6=0x76;int c7 = 0x77;int c8 = 0x78;int cb=0x7B; int ce=0x7E; int cf=0x7F;
-    clear();
-    milli_delay(1000); 
-    p0(55,c7);p0(14,c8);p0(11,c7);
-    milli_delay(1000);
-    p0(53,c7);p0(2,c8);p0(14,c3);p0(2,c8);p0(9,c7);
-    milli_delay(1000);
-    p0(48,c7);p0(2,c8);p0(3,c8);p0(16,c3);p0(2,c8);p0(1,c8);p0(8,c7);
-    milli_delay(1000);
-    p0(38,c7);p0(1,c8);p0(2,c3);p0(1,c8);p0(5,c7);p0(3,c8);p0(20,c3);p0(1,c8);p0(9,c7);
-    milli_delay(1000);
-    p0(11,c7);p0(12,c8);p0(14,c7);p0(1,c8);p0(3,c3);p0(1,c8);p0(3,c7);p0(2,c8);p0(23,c3);p0(2,c8);p0(8,c7);  
-    milli_delay(1000);
-    p0(9,c7);p0(2,c8);p0(11,c3);p0(2,c8);p0(13,c7);p0(1,c8);p0(2,c3);p0(1,c8);p0(3,c7);p0(2,c8);p0(23,c3);p0(2,c8);p0(9,c7);
-    milli_delay(1000);
-    p0(8,c7);p0(1,c8);p0(16,c3);p0(2,c8);p0(4,c7);p0(1,c8);p0(1,c3);p0(1,c8);p0(3,c7);p0(1,c8);p0(1,c3);p0(1,c8);p0(2,c7);p0(1,c8);p0(19,c3);p0(8,c8);p0(10,c7);
-    milli_delay(1000);
-    p0(8,c7);p0(1,c8);p0(19,c3);p0(1,c8);p0(2,c7);p0(1,c8);p0(2,c3);p0(1,c8);p0(2,c7);p0(1,c8);p0(3,c7);p0(1,c8);p0(9,c3);p0(2,c8);p0(5,c7);p0(5,c8);p0(17,c7);
-    milli_delay(1000);
-    p0(9,c7);p0(1,c8);p0(20,c3);p0(1,c8);p0(2,c7);p0(2,c8);p0(5,c7);p0(1,c8); p0(5,c3);p0(2,c8);p0(7,c7);p0(2,c8);p0(7,c3);p0(1,c8);p0(15,c7);
-    milli_delay(1000);
-    p0(17,c7);p0(9,c8);p0(5,c3);p0(1,c8);p0(7,c7);p0(1,c8);p0(3,c3);p0(2,c8); p0(13,c7);p0(2,c8);p0(4,c3);p0(1,c8);p0(15,c7);
-    milli_delay(1000);
-    p0(14,c7);p0(1,c8);p0(5,c3);p0(2,c8);p0(6,c7);p0(1,c8);p0(3,c3);p0(1,c8); p0(5,c7);p0(1,c8);p0(2,c3);p0(1,c8);p0(6,c7);p0(7,c8);p0(7,c7);p0(1,c8);p0(17,c7);
-    milli_delay(1000);
-    p0(13,c7);p0(1,c8);p0(4,c3);p0(1,c8);p0(11,c7);p0(1,c8);p0(2,c3);p0(1,c8); p0(4,c7);p0(1,c8);p0(1,c3);p0(1,c8);p0(5,c7);p0(1,c8);p0(9,cb);p0(2,c8);p0(5,c7);p0(1,c8);p0(3,c3);p0(3,c8);p0(10,c7);
-    milli_delay(1000);
-    p0(14,c7);p0(3,c8);p0(5,c7);p0(6,c8);p0(4,c7);p0(2,c8);p0(3,c7);p0(1,c8); p0(1,c3);p0(1,c8);p0(4,c7);p0(1,c8);p0(13,cb);p0(1,c8);p0(5,c7);p0(1,c8);p0(5,c3);p0(1,c8);p0(9,c7);
-    milli_delay(1000);
-    p0(13,c7);p0(3,c8);p0(4,c7);p0(1,c8);p0(8,cb);p0(1,c8);p0(3,c7);p0(1,c8);p0(3,c7);p0(1,c8); p0(1,c3);p0(1,c8);p0(3,c7);p0(1,c8);p0(3,cb);p0(2,c8);p0(3,cb);p0(2,c8);p0(5,cb);p0(1,c8);p0(5,c7);p0(1,c8);p0(5,c3);p0(1,c8);p0(8,c7);
-    milli_delay(1000);
-    p0(11,c7);p0(2,c8);p0(1,c3);p0(1,c8);p0(3,c7);p0(1,c8);p0(4,cb);p0(5,c8);p0(3,cb);p0(1,c8);p0(5,c7);p0(2,c8); p0(3,c7);p0(1,c8);p0(2,cb);p0(2,c8);p0(4,c0);p0(1,c8);p0(3,cf);p0(1,c8);p0(4,cb);p0(1,c8);p0(4,c7);p0(1,c8);p0(5,c3);p0(1,c8);p0(8,c7);
-    milli_delay(1000);
-    p0(10,c7);p0(1,c8);p0(3,c3);p0(1,c8);p0(3,c7);p0(3,cb);p0(2,cf);p0(3,c0);p0(3,cf);p0(3,cb);p0(1,c8);p0(9,c7);p0(3,cb); p0(1,cf);p0(1,c8);p0(5,c0);p0(3,c8);p0(1,c0);p0(1,c8);p0(3,cb);p0(1,c8);p0(5,c7);p0(2,c8);p0(3,c3);p0(1,c8);p0(8,c7);
-    milli_delay(1000);
-    p0(9,c7);p0(1,c8);p0(4,c3);p0(1,c8);p0(2,c7);p0(1,c8);p0(3,cb);p0(1,cf);p0(1,c8);p0(6,c0);p0(1,cf);p0(2,cb);p0(1,c8);p0(9,c7);p0(1,c8);p0(2,cb); p0(2,cf);p0(7,c0);p0(2,cf);p0(1,c8);p0(3,cb);p0(1,c8);p0(4,c7);p0(1,c8);p0(1,c2);p0(5,c8);p0(8,c7);
-    milli_delay(1000);
-    p0(9,c7);p0(1,c8);p0(4,c3);p0(1,c8);p0(2,c7);p0(1,c8);p0(3,cb);p0(1,c8);p0(1,cf);p0(1,c8);p0(4,c0);p0(1,cf);p0(2,cb);p0(1,c8);p0(10,c7);p0(1,c8);p0(3,cb); p0(2,cf);p0(1,c8);p0(4,c0);p0(2,cf);p0(1,c8);p0(3,cb);p0(1,c8);p0(4,c7);p0(1,c8);p0(3,c2);p0(1,c8);p0(11,c7);
-    milli_delay(1000);
-    p0(10,c7);p0(1,c8);p0(2,c3);p0(1,c8);p0(1,c2);p0(3,c7);p0(2,c8);p0(3,cb);p0(1,c8);p0(3,cf);p0(1,c8);p0(2,cb);p0(1,c8);p0(2,c7);p0(1,c8);p0(4,c6); p0(1,c8);p0(4,c7);p0(1,c8);p0(4,cb);p0(5,c0);p0(1,c8);p0(4,cb);p0(1,c8);p0(4,c7);p0(1,c8);p0(4,c2);p0(1,c8);p0(11,c7);
-    milli_delay(1000);
-    p0(13,c7);p0(1,c8);p0(2,c2);p0(1,c8);p0(3,c7);p0(1,c8);p0(7,cb);p0(1,c8);p0(3,c7);p0(1,c8);p0(6,c6);p0(1,c8);p0(4,c7);p0(2,c8);p0(10,cb); p0(2,c8);p0(4,c7);p0(1,c8);p0(5,c2);p0(1,c8);p0(11,c7);
-    milli_delay(1000);
-    p0(13,c7);p0(1,c8);p0(4,c2);p0(1,c8);p0(13,c7);p0(1,c8);p0(6,c6);p0(1,c8);p0(7,c7);p0(8,c8);p0(7,c7);p0(1,c8);p0(5,c2);p0(1,c8);p0(11,c7);
-    milli_delay(1000);
-    p0(13,c7);p0(2,c8);p0(4,c2);p0(1,c8);p0(6,c7);p0(1,c8);p0(2,ce);p0(1,c8);p0(2,c7);p0(1,c8);p0(5,c6);p0(1,c8);p0(4,c7);p0(1,c8);p0(1,ce);p0(1,c8);p0(12,c7);p0(1,c8);p0(1,c2);p0(1,c8);p0(1,c7);p0(1,c8);p0(4,c2);p0(1,c8);p0(12,c7);
-    milli_delay(1000);
-    p0(15,c7);p0(1,c8);p0(4,c2);p0(1,c8);p0(1,c7);p0(1,c8);p0(6,ce);p0(1,c8);p0(3,c7);p0(1,c8);p0(3,c6);p0(1,c8);p0(4,c7);p0(1,c8);p0(7,ce);p0(2,c8);p0(7,c2);p0(1,c8);p0(2,c7);p0(1,c8);p0(3,c2);p0(1,c8);p0(13,c7);
-    milli_delay(1000);
-    p0(16,c7);p0(5,c8);p0(1,c7);p0(2,c8);p0(5,ce);p0(1,c8);p0(4,c7);p0(1,c8);p0(1,c6);p0(1,c8);p0(4,c7);p0(1,c8);p0(6,ce);p0(3,c8);p0(6,c2);p0(4,c8);p0(18,c7);
-    milli_delay(1000);
-    p0(24,c7);p0(7,c8);p0(5,c7);p0(1,c8);p0(8,c7);p0(5,c8);p0(2,c7);p0(8,c8);p0(21,c7);
-    milli_delay(10000);
-    clear_screen(console_table[0].orig,console_table[0].con_size);
-}
 
 
 
@@ -1344,3 +1060,4 @@ void sleep(float pauseTime) {
 }
 
 /*********************** Ending of the snake game ************************/
+

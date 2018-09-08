@@ -84,7 +84,7 @@ PUBLIC int do_open()
     if (flags & O_CREAT) {
         if (inode_nr) {
             //文件已存在，不要输出错误信息
-            printl("file exists.\n");
+            printl("{FS} file already exists: %s\n",pathname);
             return -1;
         }
         else {
@@ -261,6 +261,9 @@ PUBLIC int do_ls()
         for (j = 0; j < SECTOR_SIZE / DIR_ENTRY_SIZE; j++, pde++){
             /*struct inode *n = find_inode(pde->inode_nr);*/
              printl("%s", pde->name);
+             if(inode_table[pde->inode_nr].i_mode == I_DIRECTORY){
+				printf("\\");
+			} 
             for(int l=strlen(pde->name); l < 15; l++){
                 printl(" ");
             }
@@ -299,11 +302,11 @@ PUBLIC int do_mkdir()
 
 	int result = create_dir(pathname);
 	if(!result){
-		printl("Create dir %s fail!\n", pathname);
+		printl("mkdir: fail to create directory: %s\n", pathname);
 		return -1;
 	}
 	
-	printl("Create dir %s success!\n", pathname);
+	printl("mkdir: directory created: %s\n", pathname);
 	return 0;
 }
 
