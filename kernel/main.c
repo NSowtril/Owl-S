@@ -151,6 +151,8 @@ void shell(char *tty_name) {
     // The boot animation
     // animation();
     char current_dirr[512] = "/";
+    if(current_console==0)
+        help();
     while (1) {
         // clear the array ！
         clearArr(rdbuf, 512);
@@ -769,14 +771,15 @@ void help() {
     printf("    rm          [filename]        : delete a file                               ");
     printf("    cp          [source] [dest]   : copy a file                                 ");
     printf("    mv          [source] [dest]   : move a file                                 ");
-    printf("    encrypt     [filename]        : encrypt a file                              ");
+    // printf("    encrypt     [filename]        : encrypt a file                              ");
     printf("    cd          [pathname]        : change the directory                        ");
     printf("    mkdir       [dirname]         : create a new directory                      ");
     // printf("    minesweeper                   : start the minesweeper game                  ");
     // printf("    snake                         : start the snake game                        ");
     // printf("    2048                          : start the 2048 game                         ");
-    printf("    procmng                          : process management                          ");
+    printf("    procmng                       : process management                          ");
     printf("    uname                         : display the system's name                   ");
+    printf("    pwd                           : print working directory                     ");
     printf("================================================================================");
 }
 
