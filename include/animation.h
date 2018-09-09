@@ -14,6 +14,7 @@ void animation(){
 
     int c0=0x70;int c2=0x72;int c3 = 0x73;int c6=0x76;int c7 = 0x77;int c8 = 0x78;int cb=0x7B; int ce=0x7E; int cf=0x7F;
     clear();
+    
     milli_delay(1000); 
     p0(55,c7);p0(14,c8);p0(11,c7);
     milli_delay(1000);
