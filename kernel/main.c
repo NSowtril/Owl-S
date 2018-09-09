@@ -16,7 +16,7 @@
 #include "proto.h"
 #include "animation.h"
 #include "2048Game.h" // For 2048 game
-#include "calculator.h"
+
 /*======================================================================*
                             kernel_main
  *======================================================================*/
@@ -445,14 +445,16 @@ void shell(char *tty_name) {
         //}
 
         // Command "snake"
-        else if (strcmp(cmd, "snake") == 0) {
-            snakeGame();
-        }
+        // else if (strcmp(cmd, "snake") == 0) {
+        //    snakeGame();
+        // }
 
         // Commmand "2048"
-        else if (strcmp(cmd, "2048") == 0) {
-        	start2048Game(fd_stdin, fd_stdout);
-        }
+        // else if (strcmp(cmd, "2048") == 0) {
+        //	start2048Game(fd_stdin, fd_stdout);
+        // }
+
+
 
         // Command not supported
         else {
@@ -550,7 +552,10 @@ void help() {
     printf("                                                                                ");
     printf("         A microkernel OS developed by Chudi LAN, Yulei CHEN in 2018            ");
     printf("================================================================================");
+    printf("    help                          : display help for commands                   ");
     printf("    clear                         : clear the screen                            ");
+    printf("    [shift]+[up/down]             : scroll up/down the screen                   ");
+    printf("    [alt]+[F1/F2]                 : switch to another tty                       ");
     printf("    pwd                           : print working directory                     ");
     printf("    ls                            : list files in current directory             ");
     printf("    touch       [filename]        : create a new file                           ");
@@ -578,8 +583,7 @@ void ProcessManage() {
     printf("=============================================================================\n");
     printf("=          Usage: pause  [pid]  you can pause one process                   =\n");
     printf("=          	      resume [pid]  you can resume one process                  =\n");
-    printf("=                 kill   [pid]  kill the process                            =\n");
-    printf("=                 up     [pid]  improve the process priority                =\n");
+    // pintf("=                 up     [pid]  improve the process priority                =\n");
     printf("=============================================================================\n");
 }
 
